@@ -1,5 +1,6 @@
 import pygame
 from settings import WIDTH, HEIGHT, FPS, TITLE
+from entities import Board 
 
 class Game:
     def __init__(self):
@@ -8,6 +9,7 @@ class Game:
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.clock = pygame.time.Clock()
         self.running = True
+        self.board = Board() 
 
     def handle_events(self, event: pygame.event.Event) -> None:
         if event.type == pygame.QUIT:
@@ -21,6 +23,7 @@ class Game:
 
     def draw(self) -> None:
         self.screen.fill((18, 18, 22))
+        self.board.draw(self.screen)
         pygame.display.flip()
 
     def run(self) -> None:
