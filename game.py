@@ -1,5 +1,5 @@
 import pygame
-from settings import WIDTH, HEIGHT, FPS, TITLE, CELL_SIZE
+from settings import WIDTH, HEIGHT, FPS, TITLE, CELL_SIZE, TEXT_COLOR, TEXT_BG_COLOR
 from entities import Board 
 
 class Game:
@@ -12,12 +12,14 @@ class Game:
         self.board = Board()
         self.player = "X"
         self.game_over = False
+        self.font = pygame.font.SysFont('arial', 40, bold=True)
+        self.message = ""
 
     def reset_game(self):
         self.board.reset()
         self.player = "X"
         self.game_over = False
-        print("Game Restarted! Player X's turn.")
+        self.message = ""
 
     def handle_events(self, event: pygame.event.Event) -> None:
         if event.type == pygame.QUIT:
@@ -29,7 +31,7 @@ class Game:
 
             elif event.key == pygame.K_r:
                 self.reset_game()
-                
+
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if self.game_over:
                 return
@@ -41,12 +43,11 @@ class Game:
                 self.board.mark_square(clicked_row, clicked_col, self.player)
                 winner = self.board.check_winner()
                 if winner:
-                    print(f"GAME OVER! Player {winner} wins!")
                     self.game_over = True
-
+                    self.message = f" Player {winner} Wins! Press 'R' to Restart "
                 elif self.board.is_full():
-                    print("GAME OVER! It's a draw!")
                     self.game_over = True
+                    self.message = " It's a Draw! Press 'R' to Restart "
 
                 else:
                     if self.player == "X":
@@ -60,12 +61,15 @@ class Game:
     def draw(self) -> None:
         self.screen.fill((18, 18, 22))
         self.board.draw(self.screen)
+        if self.message != "":
+            text_surface = self.font.render(self.message, True, TEXT_COLOR, TEXT_BG_COLOR)
+            text_rect = text_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+            self.screen.blit(text_surface, text_rect)
         pygame.display.flip()
 
     def run(self) -> None:
         while self.running:
             self.clock.tick(FPS)
-            
             for event in pygame.event.get():
                 self.handle_events(event)
 
