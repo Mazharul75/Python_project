@@ -9,7 +9,8 @@ class Game:
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.clock = pygame.time.Clock()
         self.running = True
-        self.board = Board() 
+        self.board = Board()
+        self.player = "X"
 
     def handle_events(self, event: pygame.event.Event) -> None:
         if event.type == pygame.QUIT:
@@ -21,7 +22,17 @@ class Game:
             mouse_x, mouse_y = event.pos
             clicked_row = mouse_y // CELL_SIZE
             clicked_col = mouse_x // CELL_SIZE
-            print(f"Clicked on Row: {clicked_row}, Column: {clicked_col}")
+        
+            if self.board.available_square(clicked_row, clicked_col):
+                self.board.mark_square(clicked_row, clicked_col, self.player)
+                print(f"Success! {self.player} took Row: {clicked_row}, Col: {clicked_col}")
+                
+                if self.player == "X":
+                    self.player = "O"
+                else:
+                    self.player = "X"
+            else:
+                print("That square is already taken!")
 
     def update(self) -> None:
         pass 
