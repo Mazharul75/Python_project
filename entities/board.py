@@ -1,5 +1,5 @@
 import pygame
-from settings import WIDTH, HEIGHT, ROWS, COLS, CELL_SIZE, LINE_COLOR, LINE_WIDTH
+from settings import WIDTH, HEIGHT, ROWS, COLS, CELL_SIZE, LINE_COLOR, LINE_WIDTH, CROSS_COLOR, CIRCLE_COLOR, SPACE
 
 class Board:
     def __init__(self):
@@ -19,3 +19,20 @@ class Board:
         for i in range(1, COLS):
             x = i * CELL_SIZE
             pygame.draw.line(surface, LINE_COLOR, (x, 0), (x, HEIGHT), LINE_WIDTH)
+
+        for row in range(ROWS):
+            for col in range(COLS):
+                
+                if self.grid[row][col] == "O":
+                    center_x = col * CELL_SIZE + CELL_SIZE // 2
+                    center_y = row * CELL_SIZE + CELL_SIZE // 2
+                    pygame.draw.circle(surface, CIRCLE_COLOR, (center_x, center_y), CELL_SIZE // 2 - SPACE, LINE_WIDTH)
+                
+                elif self.grid[row][col] == "X":
+                    start_1 = (col * CELL_SIZE + SPACE, row * CELL_SIZE + SPACE)
+                    end_1 = (col * CELL_SIZE + CELL_SIZE - SPACE, row * CELL_SIZE + CELL_SIZE - SPACE)
+                    pygame.draw.line(surface, CROSS_COLOR, start_1, end_1, LINE_WIDTH + 5)
+                    
+                    start_2 = (col * CELL_SIZE + SPACE, row * CELL_SIZE + CELL_SIZE - SPACE)
+                    end_2 = (col * CELL_SIZE + CELL_SIZE - SPACE, row * CELL_SIZE + SPACE)
+                    pygame.draw.line(surface, CROSS_COLOR, start_2, end_2, LINE_WIDTH + 5)
