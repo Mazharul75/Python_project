@@ -25,7 +25,9 @@ class Game:
         
             if self.board.available_square(clicked_row, clicked_col):
                 self.board.mark_square(clicked_row, clicked_col, self.player)
-                print(f"Success! {self.player} took Row: {clicked_row}, Col: {clicked_col}")
+                winner = self.board.check_winner()
+                if winner:
+                    print(f"GAME OVER! Player {winner} wins!")
                 
                 if self.player == "X":
                     self.player = "O"

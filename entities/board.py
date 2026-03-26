@@ -11,6 +11,22 @@ class Board:
     def mark_square(self, row, col, player):
         self.grid[row][col] = player
 
+    def check_winner(self):
+        for row in range(ROWS):
+            if self.grid[row][0] == self.grid[row][1] == self.grid[row][2] and self.grid[row][0] is not None:
+                return self.grid[row][0]
+
+        for col in range(COLS):
+            if self.grid[0][col] == self.grid[1][col] == self.grid[2][col] and self.grid[0][col] is not None:
+                return self.grid[0][col]
+
+        if self.grid[0][0] == self.grid[1][1] == self.grid[2][2] and self.grid[0][0] is not None:
+            return self.grid[0][0]
+        if self.grid[0][2] == self.grid[1][1] == self.grid[2][0] and self.grid[0][2] is not None:
+            return self.grid[0][2]
+
+        return None
+
     def draw(self, surface: pygame.Surface) -> None:
         for i in range(1, ROWS):
             y = i * CELL_SIZE
