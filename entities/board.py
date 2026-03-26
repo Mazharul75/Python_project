@@ -27,6 +27,14 @@ class Board:
 
         return None
 
+    def is_full(self):
+        for row in range(ROWS):
+            for col in range(COLS):
+                if self.grid[row][col] is None:
+                    return False
+        
+        return True
+
     def draw(self, surface: pygame.Surface) -> None:
         for i in range(1, ROWS):
             y = i * CELL_SIZE

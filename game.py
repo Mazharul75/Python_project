@@ -11,6 +11,7 @@ class Game:
         self.running = True
         self.board = Board()
         self.player = "X"
+        self.game_over = False
 
     def handle_events(self, event: pygame.event.Event) -> None:
         if event.type == pygame.QUIT:
@@ -19,6 +20,8 @@ class Game:
             if event.key == pygame.K_ESCAPE:
                 self.running = False
         elif event.type == pygame.MOUSEBUTTONDOWN:
+            if self.game_over:
+                return
             mouse_x, mouse_y = event.pos
             clicked_row = mouse_y // CELL_SIZE
             clicked_col = mouse_x // CELL_SIZE
@@ -28,13 +31,17 @@ class Game:
                 winner = self.board.check_winner()
                 if winner:
                     print(f"GAME OVER! Player {winner} wins!")
-                
-                if self.player == "X":
-                    self.player = "O"
+                    self.game_over = True
+
+                elif self.board.is_full():
+                    print("GAME OVER! It's a draw!")
+                    self.game_over = True
+
                 else:
-                    self.player = "X"
-            else:
-                print("That square is already taken!")
+                    if self.player == "X":
+                        self.player = "O"
+                    else:
+                        self.player = "X"
 
     def update(self) -> None:
         pass 
