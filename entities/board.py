@@ -3,7 +3,7 @@ from settings import WIDTH, HEIGHT, ROWS, COLS, CELL_SIZE, LINE_COLOR, LINE_WIDT
 
 class Board:
     def __init__(self):
-        pass
+        self.grid = [[None for _ in range(COLS)] for _ in range(ROWS)]
 
     def draw(self, surface: pygame.Surface) -> None:
         for i in range(1, ROWS):
