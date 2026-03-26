@@ -1,5 +1,5 @@
 import pygame
-from settings import WIDTH, HEIGHT, FPS, TITLE
+from settings import WIDTH, HEIGHT, FPS, TITLE, CELL_SIZE
 from entities import Board 
 
 class Game:
@@ -17,6 +17,11 @@ class Game:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 self.running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = event.pos
+            clicked_row = mouse_y // CELL_SIZE
+            clicked_col = mouse_x // CELL_SIZE
+            print(f"Clicked on Row: {clicked_row}, Column: {clicked_col}")
 
     def update(self) -> None:
         pass 
