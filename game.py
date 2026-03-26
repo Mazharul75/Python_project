@@ -12,7 +12,7 @@ class Game:
         self.board = Board()
         self.player = "X"
         self.game_over = False
-        self.font = pygame.font.SysFont('arial', 40, bold=True)
+        self.font = pygame.font.SysFont('times new roman', 30, bold=True)
         self.message = ""
 
     def reset_game(self):
@@ -59,7 +59,7 @@ class Game:
         pass 
 
     def draw(self) -> None:
-        self.screen.fill((18, 18, 22))
+        self.screen.fill((255, 255, 255))
         self.board.draw(self.screen)
         if self.message != "":
             text_surface = self.font.render(self.message, True, TEXT_COLOR, TEXT_BG_COLOR)

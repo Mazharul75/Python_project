@@ -1,5 +1,5 @@
 import pygame
-from settings import WIDTH, HEIGHT, ROWS, COLS, CELL_SIZE, LINE_COLOR, LINE_WIDTH, CROSS_COLOR, CIRCLE_COLOR, SPACE
+from settings import WIDTH, HEIGHT, ROWS, COLS, CELL_SIZE, LINE_COLOR, LINE_WIDTH, X_WIDTH, O_WIDTH, CROSS_COLOR, CIRCLE_COLOR, SPACE
 
 class Board:
     def __init__(self):
@@ -60,17 +60,17 @@ class Board:
                 if self.grid[row][col] == "O":
                     center_x = col * CELL_SIZE + CELL_SIZE // 2
                     center_y = row * CELL_SIZE + CELL_SIZE // 2
-                    pygame.draw.circle(surface, CIRCLE_COLOR, (center_x, center_y), CELL_SIZE // 2 - SPACE, LINE_WIDTH)
+                    pygame.draw.circle(surface, CIRCLE_COLOR, (center_x, center_y), CELL_SIZE // 2 - SPACE, O_WIDTH)
                 
                 elif self.grid[row][col] == "X":
                     start_1 = (col * CELL_SIZE + SPACE, row * CELL_SIZE + SPACE)
                     end_1 = (col * CELL_SIZE + CELL_SIZE - SPACE, row * CELL_SIZE + CELL_SIZE - SPACE)
-                    pygame.draw.line(surface, CROSS_COLOR, start_1, end_1, LINE_WIDTH + 5)
+                    pygame.draw.line(surface, CROSS_COLOR, start_1, end_1, X_WIDTH)
                     
                     start_2 = (col * CELL_SIZE + SPACE, row * CELL_SIZE + CELL_SIZE - SPACE)
                     end_2 = (col * CELL_SIZE + CELL_SIZE - SPACE, row * CELL_SIZE + SPACE)
-                    pygame.draw.line(surface, CROSS_COLOR, start_2, end_2, LINE_WIDTH + 5)
+                    pygame.draw.line(surface, CROSS_COLOR, start_2, end_2, X_WIDTH)
                     
         if self.winning_line:
-            red_color = (250, 0, 0)
-            pygame.draw.line(surface, red_color, self.winning_line[0], self.winning_line[1], LINE_WIDTH + 10)
+            black_color = (0, 0, 0)
+            pygame.draw.line(surface, black_color, self.winning_line[0], self.winning_line[1], LINE_WIDTH)
