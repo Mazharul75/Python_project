@@ -13,12 +13,23 @@ class Game:
         self.player = "X"
         self.game_over = False
 
+    def reset_game(self):
+        self.board.reset()
+        self.player = "X"
+        self.game_over = False
+        print("Game Restarted! Player X's turn.")
+
     def handle_events(self, event: pygame.event.Event) -> None:
         if event.type == pygame.QUIT:
             self.running = False
+
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 self.running = False
+
+            elif event.key == pygame.K_r:
+                self.reset_game()
+                
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if self.game_over:
                 return

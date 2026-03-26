@@ -6,6 +6,10 @@ class Board:
         self.grid = [[None for _ in range(COLS)] for _ in range(ROWS)]
         self.winning_line = None 
 
+    def reset(self):
+        self.grid = [[None for _ in range(COLS)] for _ in range(ROWS)]
+        self.winning_line = None
+
     def available_square(self, row, col):
         return self.grid[row][col] is None
 
