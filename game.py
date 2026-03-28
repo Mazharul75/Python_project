@@ -13,7 +13,9 @@ class Game:
         self.player = "X"
         self.game_over = False
         self.font = pygame.font.SysFont('times new roman', 30, bold=True)
+        self.small_font = pygame.font.SysFont('arial', 25, bold=True)
         self.message = ""
+        self.state = "MENU"
 
     def reset_game(self):
         self.board.reset()
@@ -29,10 +31,22 @@ class Game:
             if event.key == pygame.K_ESCAPE:
                 self.running = False
 
-            elif event.key == pygame.K_r:
-                self.reset_game()
+            if self.state == "MENU":
+                if event.key == pygame.K_RETURN: 
+                    self.state = "PLAYING"
+                    self.reset_game()
+                elif event.key == pygame.K_l:
+                    self.state = "LEADERBOARD" 
+            
+            elif self.state == "PLAYING":
+                if event.key == pygame.K_r:
+                    self.reset_game()
+            
+            elif self.state == "LEADERBOARD":
+                if event.key == pygame.K_m: 
+                    self.state = "MENU"
 
-        elif event.type == pygame.MOUSEBUTTONDOWN:
+        elif event.type == pygame.MOUSEBUTTONDOWN and self.state == "PLAYING":
             if self.game_over:
                 return
             mouse_x, mouse_y = event.pos
@@ -60,11 +74,35 @@ class Game:
 
     def draw(self) -> None:
         self.screen.fill((255, 255, 255))
-        self.board.draw(self.screen)
-        if self.message != "":
-            text_surface = self.font.render(self.message, True, TEXT_COLOR, TEXT_BG_COLOR)
-            text_rect = text_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2))
-            self.screen.blit(text_surface, text_rect)
+        if self.state == "MENU":
+            title_surf = self.font.render("TIC-TAC-TOE", True, (0, 0, 0))
+            title_rect = title_surf.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 50))
+            self.screen.blit(title_surf, title_rect)
+            
+            play_surf = self.small_font.render("Press ENTER to Play", True, (100, 100, 100))
+            play_rect = play_surf.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 20))
+            self.screen.blit(play_surf, play_rect)
+            
+            lead_surf = self.small_font.render("Press L for Leaderboard", True, (100, 100, 100))
+            lead_rect = lead_surf.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 60))
+            self.screen.blit(lead_surf, lead_rect)
+            
+        elif self.state == "PLAYING":
+            self.board.draw(self.screen)
+            
+            if self.message != "":
+                text_surface = self.font.render(self.message, True, TEXT_COLOR, TEXT_BG_COLOR)
+                text_rect = text_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+                self.screen.blit(text_surface, text_rect)
+                
+        elif self.state == "LEADERBOARD":
+            lead_title = self.font.render("LEADERBOARD", True, (0, 0, 0))
+            lead_rect = lead_title.get_rect(center=(WIDTH // 2, 50))
+            self.screen.blit(lead_title, lead_rect)
+            
+            back_surf = self.small_font.render("Press M for Menu", True, (100, 100, 100))
+            back_rect = back_surf.get_rect(center=(WIDTH // 2, HEIGHT - 50))
+            self.screen.blit(back_surf, back_rect)
         pygame.display.flip()
 
     def run(self) -> None:
