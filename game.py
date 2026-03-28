@@ -58,11 +58,16 @@ class Game:
             elif event.key == pygame.K_o and self.state == "MENU":
                 self.state = "PLAYING"
                 self.reset_game("O")
-                
             elif event.key == pygame.K_l and self.state == "MENU":
                 self.state = "LEADERBOARD"
+                
             elif event.key == pygame.K_r and self.state == "PLAYING":
                 self.reset_game()
+            elif event.key == pygame.K_m and self.state == "PLAYING":
+                self.state = "MENU" 
+            elif event.key == pygame.K_l and self.state == "PLAYING":
+                self.state = "LEADERBOARD" 
+                
             elif event.key == pygame.K_m and self.state == "LEADERBOARD":
                 self.state = "MENU"
 
@@ -79,12 +84,12 @@ class Game:
                 
                 if winner:
                     self.game_over = True
-                    self.message = f" Player {winner} Wins! Press 'R' to Restart "
+                    self.message = f" Player {winner} Wins! 'R' to Restart or 'M' for Menu "
                     self.scores[winner] += 1
                     self.save_scores()
                 elif self.board.is_full():
                     self.game_over = True
-                    self.message = " It's a Draw! Press 'R' to Restart "
+                    self.message = " Draw! 'R' to Restart or 'M' for Menu "
                     self.scores["Draws"] += 1
                     self.save_scores()
                 else:
